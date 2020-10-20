@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Spring Security</h1>
+<form class="form-signin" method="post" action="/login1">
+    <h2 class="form-signin-heading">登录</h2>
+    <label for="username" class="sr-only">用户名</label>
+    <input type="text" style="height: 46px;line-height: 46px;margin-bottom: 16px;" id="username" name="username" class="form-control" placeholder="请输入用户名" required autofocus>
+    <label for="password" class="sr-only">密码</label>
+    <input type="password" style="height: 46px;line-height: 46px;" id="password" name="password" class="form-control" placeholder="请输入密码" required>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="remember-me"> 记住密码
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+</form>
+</body>
+</html>
