@@ -1,7 +1,6 @@
 package org.paasplatform.security.rbac;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,22 +8,25 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.io.PrintWriter;
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     public void config(AuthenticationManagerBuilder auth) throws Exception {
         // 在内存中配置用户，配置多个用户调用`and()`方法
-        auth.inMemoryAuthentication()
+        /*auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder()) // 指定加密方式
                 .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN")
                 .and()
-                .withUser("test").password(passwordEncoder().encode("123456")).roles("USER");
+                .withUser("test").password(passwordEncoder().encode("123456")).roles("USER");*/
     }
 
     /**
@@ -40,7 +42,7 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authentication/*","/login") // 不需要登录就可以访问
                 .permitAll()
                 // 其余所有请求都需要认证
-                .antMatchers("/user/**").hasAnyRole("USER") // 需要具有ROLE_USER角色才能访问
+                .antMatchers("/user/**").hasAuthority("read")//.hasAnyRole("USER") // 需要具有ROLE_USER角色才能访问
                 .antMatchers("/admin/**").hasAnyRole("ADMIN") // 需要具有ROLE_ADMIN角色才能访问
                 .anyRequest().authenticated()
                 .and()
@@ -103,5 +105,17 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         // BCryptPasswordEncoder：Spring Security 提供的加密工具，可快速实现加密加盐
         return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    @Override
+    protected UserDetailsService userDetailsService(){
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("test").password(passwordEncoder().encode("123456")).roles("USER")
+                .authorities("read").build());
+        manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("123456")).roles("ADMIN")
+                .authorities("write").build());
+        return manager;
     }
 }
