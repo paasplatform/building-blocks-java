@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac;
+package org.paasplatform.security.rbac.inmemory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

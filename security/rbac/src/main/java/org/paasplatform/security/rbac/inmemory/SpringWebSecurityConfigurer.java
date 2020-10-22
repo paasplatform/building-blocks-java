@@ -1,10 +1,8 @@
-package org.paasplatform.security.rbac;
+package org.paasplatform.security.rbac.inmemory;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,46 +15,26 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.io.PrintWriter;
 
 @Configuration
-//@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
-    @Autowired
-    public void config(AuthenticationManagerBuilder auth) throws Exception {
-        // 在内存中配置用户，配置多个用户调用`and()`方法
-        /*auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder()) // 指定加密方式
-                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN")
-                .and()
-                .withUser("test").password(passwordEncoder().encode("123456")).roles("USER");*/
-    }
-
-    /**
-     * 登录处理
-     * @param http
-     * @throws Exception
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 开启登录配置
         http.authorizeRequests()
-                // 允许匿名的url - 可理解为放行接口 - 多个接口使用,分割
-                .antMatchers("/authentication/*","/login") // 不需要登录就可以访问
-                .permitAll()
-                // 其余所有请求都需要认证
-                .antMatchers("/user/**").hasAuthority("read")//.hasAnyRole("USER") // 需要具有ROLE_USER角色才能访问
-                .antMatchers("/admin/**").hasAnyRole("ADMIN") // 需要具有ROLE_ADMIN角色才能访问
-                .anyRequest().authenticated()
-                .and()
-                // 设置登录认证页面
-                .formLogin()
+            .antMatchers("/authentication/*", "/login").permitAll()
+            .antMatchers("/user/**").hasAnyAuthority("read")//.hasAnyRole("USER") // 需要具有ROLE_USER角色才能访问
+            .antMatchers("/admin/**").hasAnyRole("ADMIN") // 需要具有ROLE_ADMIN角色才能访问
+            .anyRequest()
+            .authenticated()
+            .and()
+            .formLogin()
                 .loginPage("/authentication/login") // 设置登录页面
                 .loginProcessingUrl("/login1")
                 .defaultSuccessUrl("/user/index") // 设置默认登录成功后跳转的页面
-
                 // 自定义登陆用户名和密码属性名，默认为 username和password
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // 登录成功后的处理器  - 方式②
-               /* .successHandler((req, resp, authentication) -> {
+                /*.successHandler((req, resp, authentication) -> {
                     resp.setContentType("application/json;charset=utf-8");
                     PrintWriter out = resp.getWriter();
                     out.write("登录成功...");
@@ -85,37 +63,29 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 // 关闭CSRF跨域
                 .csrf().disable();
-
     }
 
     /**
-     * 忽略拦截
+     * Spring Security ignores URLs of static resources
      * @param web
      * @throws Exception
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // 设置拦截忽略url - 会直接过滤该url - 将不会经过Spring Security过滤器链
-        web.ignoring().antMatchers("/getUserInfo");
-        // 设置拦截忽略文件夹，可以对静态资源放行
-        web.ignoring().antMatchers("/css/**", "/js/**");
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // BCryptPasswordEncoder：Spring Security 提供的加密工具，可快速实现加密加盐
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     @Override
-    protected UserDetailsService userDetailsService(){
+    protected InMemoryUserDetailsManager userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("test").password(passwordEncoder().encode("123456")).roles("USER")
-                .authorities("read").build());
-        manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("123456")).roles("ADMIN")
-                .authorities("write").build());
+        manager.createUser(User.withUsername("test").password(passwordEncoder().encode("123456")).authorities("ROLE_USER", "read").build());
+        manager.createUser(User.withUsername("admin").password(passwordEncoder().encode("123456")).authorities("ROLE_ADMIN", "write").build());
         return manager;
     }
 }

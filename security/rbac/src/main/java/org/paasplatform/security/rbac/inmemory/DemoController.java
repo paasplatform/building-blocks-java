@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.api;
+package org.paasplatform.security.rbac.inmemory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @Controller
-public class GreetingController {
+public class DemoController {
 
     private static final String template = "Hello, %s!";
 
-    public GreetingController() {
+    public DemoController() {
 
     }
 

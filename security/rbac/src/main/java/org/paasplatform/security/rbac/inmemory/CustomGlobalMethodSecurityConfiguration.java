@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac;
+package org.paasplatform.security.rbac.inmemory;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,26 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableGlobalMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true,
-        prePostEnabled = true
-)
-public class RoleConfig extends GlobalMethodSecurityConfiguration {
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+public class CustomGlobalMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
     @Override
     protected AccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<AccessDecisionVoter<? extends Object>>();
+
         ExpressionBasedPreInvocationAdvice expressionAdvice = new ExpressionBasedPreInvocationAdvice();
         expressionAdvice.setExpressionHandler(getExpressionHandler());
-//        if (prePostEnabled()) {
-        decisionVoters
-                .add(new PreInvocationAuthorizationAdviceVoter(expressionAdvice));
-//        }
-//        if (jsr250Enabled()) {
+        decisionVoters.add(new PreInvocationAuthorizationAdviceVoter(expressionAdvice));
         decisionVoters.add(new Jsr250Voter());
-//        }
-//        decisionVoters.add(new RoleVoter());
         decisionVoters.add(roleHierarchyVoter());
         decisionVoters.add(new AuthenticatedVoter());
 
@@ -54,9 +45,7 @@ public class RoleConfig extends GlobalMethodSecurityConfiguration {
     @Bean
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy(
-                "ROLE_ADMIN > ROLE_USER\n"
-        );
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER write > read");
         return roleHierarchy;
     }
 }
