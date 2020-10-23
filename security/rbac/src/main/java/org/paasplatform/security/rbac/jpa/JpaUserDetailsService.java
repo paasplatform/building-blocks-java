@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.mysql;
+package org.paasplatform.security.rbac.jpa;
 
 import org.springframework.stereotype.Service;
 

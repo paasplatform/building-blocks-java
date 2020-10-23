@@ -45,7 +45,7 @@ public class CustomGlobalMethodSecurityConfiguration extends GlobalMethodSecurit
     @Bean
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER write > read");
+        roleHierarchy.setHierarchy("write > read");
         return roleHierarchy;
     }
 }

@@ -21,7 +21,7 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // 开启登录配置
         http.authorizeRequests()
             .antMatchers("/authentication/*", "/login").permitAll()
-            .antMatchers("/user/**").hasAnyAuthority("read")//.hasAnyRole("USER") // 需要具有ROLE_USER角色才能访问
+            .antMatchers("/user/**").hasAnyAuthority("read")// 需要具有ROLE_USER角色才能访问
             .antMatchers("/admin/**").hasAnyRole("ADMIN") // 需要具有ROLE_ADMIN角色才能访问
             .anyRequest()
             .authenticated()
