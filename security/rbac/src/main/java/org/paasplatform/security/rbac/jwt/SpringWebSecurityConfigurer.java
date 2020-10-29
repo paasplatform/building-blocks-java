@@ -1,12 +1,10 @@
 package org.paasplatform.security.rbac.jwt;
 
-import org.paasplatform.security.rbac.jpa.CustomAuthenticationProvider;
-import org.paasplatform.security.rbac.jpa.CustomWebAuthenticationDetailsSource;
-import org.paasplatform.security.rbac.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -69,9 +67,10 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 开启登录配置
         http.authorizeRequests()
-            .antMatchers("/authentication/*", "/login").permitAll()
-            .antMatchers("/user/**").hasAnyAuthority("read")// 需要具有ROLE_USER角色才能访问
-            .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE") // 需要具有ROLE_ADMIN角色才能访问
+            //.antMatchers("/users/signin").permitAll()//
+            //.antMatchers("/swagger-ui.html").permitAll()//
+            .antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
+            .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")//.hasRole("Admin"); // 需要具有ROLE_ADMIN角色才能访问
             .anyRequest()
             .authenticated();
 
@@ -80,6 +79,7 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         // No session will be created or used by spring security
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }
@@ -92,6 +92,12 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+
+        web.ignoring().antMatchers(HttpMethod.GET,
+                "/swagger-resources/**",
+                "/swagger-ui.html",
+                "/v2/api-docs",
+                "/webjars/**");
     }
 
     @Bean

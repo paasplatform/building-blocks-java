@@ -1,9 +1,11 @@
 package org.paasplatform.security.rbac.jwt;
 
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,11 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public JwtAuthenticationFilter(RestAuthenticationSuccessHandler restAuthenticationSuccessHandler, RestAuthenticationFailureHandler restAuthenticationFailureHandler) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, RestAuthenticationSuccessHandler restAuthenticationSuccessHandler, RestAuthenticationFailureHandler restAuthenticationFailureHandler) {
         super("/**");
-
+        this.setAuthenticationManager(authenticationManager);
         this.setAuthenticationSuccessHandler(restAuthenticationSuccessHandler);
         this.setAuthenticationFailureHandler(restAuthenticationFailureHandler);
     }
@@ -33,12 +36,12 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         if (header == null || !header.startsWith("Bearer ")) {
             throw new AccessDeniedException("No JWT token found in request headers");
         }
-
-        String authToken = header.substring(7);
+        throw new AccessDeniedException("No JWT token found in request headers");
+        /*String authToken = header.substring(7);
 
         JwtAuthenticationToken authRequest = new JwtAuthenticationToken(authToken);
 
-        return getAuthenticationManager().authenticate(authRequest);
+        return getAuthenticationManager().authenticate(authRequest);*/
     }
 
     @Override

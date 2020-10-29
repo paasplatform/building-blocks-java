@@ -26,13 +26,13 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
     @Autowired
     private MessageSource messages;
 
-    @Autowired
-    private LocaleResolver localeResolver;
+    //@Autowired
+    //private LocaleResolver localeResolver;
 
     @Override
     public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException exception) throws IOException, ServletException {
 
-        final Locale locale = localeResolver.resolveLocale(request);
+        /*final Locale locale = localeResolver.resolveLocale(request);
 
         String errorMessage = messages.getMessage("message.badCredentials", null, locale);
 
@@ -44,8 +44,8 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
             errorMessage = messages.getMessage("auth.message.blocked", null, locale);
         } else if (exception.getMessage().equalsIgnoreCase("unusual location")) {
             errorMessage = messages.getMessage("auth.message.unusual.location", null, locale);
-        }
+        }*/
 
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, errorMessage);
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
     }
 }

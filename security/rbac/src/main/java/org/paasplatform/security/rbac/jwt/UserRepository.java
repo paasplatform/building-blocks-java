@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.jpa;
+package org.paasplatform.security.rbac.jwt;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
