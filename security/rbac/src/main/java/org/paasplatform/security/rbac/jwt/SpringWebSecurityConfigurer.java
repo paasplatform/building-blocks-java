@@ -67,10 +67,10 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 开启登录配置
         http.authorizeRequests()
-            //.antMatchers("/users/signin").permitAll()//
-            //.antMatchers("/swagger-ui.html").permitAll()//
-            .antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
+
+            //.antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
             .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")//.hasRole("Admin"); // 需要具有ROLE_ADMIN角色才能访问
+                .antMatchers("/users/signin").permitAll()
             .anyRequest()
             .authenticated();
 

@@ -1,11 +1,10 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac.form;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
-public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+//@Component
+public class FormJwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, RestAuthenticationSuccessHandler restAuthenticationSuccessHandler, RestAuthenticationFailureHandler restAuthenticationFailureHandler) {
-        super("/**");
+    public FormJwtAuthenticationFilter(AuthenticationManager authenticationManager, FormRestAuthenticationSuccessHandler restAuthenticationSuccessHandler, FormRestAuthenticationFailureHandler restAuthenticationFailureHandler) {
+        super("/login");
         this.setAuthenticationManager(authenticationManager);
         this.setAuthenticationSuccessHandler(restAuthenticationSuccessHandler);
         this.setAuthenticationFailureHandler(restAuthenticationFailureHandler);

@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac.form;
 
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 
 @Component("authenticationFailureHandler")
-public class RestAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class FormRestAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Autowired
     private MessageSource messages;
 

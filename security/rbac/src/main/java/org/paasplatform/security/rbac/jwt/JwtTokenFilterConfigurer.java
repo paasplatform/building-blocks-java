@@ -13,13 +13,13 @@ public class JwtTokenFilterConfigurer extends SecurityConfigurerAdapter<DefaultS
 
     public JwtTokenFilterConfigurer(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        //this.authenticationFilter=authenticationFilter;
+        //this.authenticatBasicAuthenticationFilterionFilter=authenticationFilter;
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         JwtTokenFilter customFilter = new JwtTokenFilter(jwtTokenProvider);
-        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(customFilter, BasicAuthenticationFilter.class);
 
         //http.addFilterAt(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
         //        .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);

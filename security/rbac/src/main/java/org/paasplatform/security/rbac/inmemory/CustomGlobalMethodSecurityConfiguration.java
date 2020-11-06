@@ -12,8 +12,10 @@ import org.springframework.security.access.prepost.PreInvocationAuthorizationAdv
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,6 @@ public class CustomGlobalMethodSecurityConfiguration extends GlobalMethodSecurit
 
         return new AffirmativeBased(decisionVoters);
     }
-
 
     @Bean
     public RoleHierarchyVoter roleHierarchyVoter() {
