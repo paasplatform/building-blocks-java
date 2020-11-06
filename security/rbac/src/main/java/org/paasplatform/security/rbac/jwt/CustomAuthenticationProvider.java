@@ -1,5 +1,7 @@
 package org.paasplatform.security.rbac.jwt;
 
+import org.paasplatform.security.rbac.jpa.User;
+import org.paasplatform.security.rbac.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

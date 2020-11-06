@@ -2,6 +2,8 @@ package org.paasplatform.security.rbac.jwt;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.paasplatform.security.rbac.jpa.User;
+import org.paasplatform.security.rbac.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

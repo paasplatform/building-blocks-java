@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.inmemory;
+package org.paasplatform.security.rbac.jwt;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

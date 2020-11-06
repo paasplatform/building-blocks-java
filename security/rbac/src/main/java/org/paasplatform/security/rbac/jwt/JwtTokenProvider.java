@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.paasplatform.security.rbac.jpa.JpaUserDetailsService;
+import org.paasplatform.security.rbac.jpa.Privilege;
+import org.paasplatform.security.rbac.jpa.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
