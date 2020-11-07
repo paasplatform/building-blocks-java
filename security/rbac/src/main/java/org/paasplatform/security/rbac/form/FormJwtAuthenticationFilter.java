@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class FormJwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     public FormJwtAuthenticationFilter(AuthenticationManager authenticationManager, FormRestAuthenticationSuccessHandler restAuthenticationSuccessHandler, FormRestAuthenticationFailureHandler restAuthenticationFailureHandler) {
-        super("/login");
+        super(new AntPathRequestMatcher("/login", "POST"));
         this.setAuthenticationManager(authenticationManager);
         this.setAuthenticationSuccessHandler(restAuthenticationSuccessHandler);
         this.setAuthenticationFailureHandler(restAuthenticationFailureHandler);

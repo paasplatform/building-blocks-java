@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac;
 
 
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.paasplatform.security.rbac.CustomException;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;

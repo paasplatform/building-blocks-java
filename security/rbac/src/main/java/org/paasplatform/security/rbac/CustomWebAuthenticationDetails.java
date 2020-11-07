@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 

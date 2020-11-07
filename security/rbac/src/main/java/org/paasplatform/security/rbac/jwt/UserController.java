@@ -17,7 +17,7 @@ public class UserController {
     //@Autowired
     //private ModelMapper modelMapper;
 
-    @PostMapping("/signin")
+    @RequestMapping("/signin")
     @ApiOperation(value = "${UserController.signin}")
     @ApiResponses(value = {//
             @ApiResponse(code = 400, message = "Something went wrong"), //

@@ -1,4 +1,4 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac;
 
 import org.paasplatform.security.rbac.jpa.User;
 import org.paasplatform.security.rbac.jpa.UserRepository;

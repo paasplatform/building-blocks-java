@@ -2,9 +2,11 @@ package org.paasplatform.security.rbac.jwt;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.paasplatform.security.rbac.CustomException;
 import org.paasplatform.security.rbac.jpa.User;
 import org.paasplatform.security.rbac.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
+    @Qualifier("jpa")
     private UserRepository userRepository;
 
     @Autowired

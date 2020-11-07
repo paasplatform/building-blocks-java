@@ -1,6 +1,8 @@
-package org.paasplatform.security.rbac.jwt;
+package org.paasplatform.security.rbac;
 
 import org.paasplatform.security.rbac.jpa.UserRepository;
+import org.paasplatform.security.rbac.jwt.JwtTokenFilterConfigurer;
+import org.paasplatform.security.rbac.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +11,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,15 +28,15 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-   /* @Autowired
-    private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    /* @Autowired
+     private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
 
-    @Autowired
-    private LogoutSuccessHandler myLogoutSuccessHandler;
+     @Autowired
+     private LogoutSuccessHandler myLogoutSuccessHandler;
 
-    @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
-*/
+     @Autowired
+     private AuthenticationFailureHandler authenticationFailureHandler;
+ */
     @Autowired
     private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
 
@@ -67,17 +68,19 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // 开启登录配置
         http.authorizeRequests()
 
-            //.antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
-            .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")//.hasRole("Admin"); // 需要具有ROLE_ADMIN角色才能访问
+                //.antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
+                .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")//.hasRole("Admin"); // 需要具有ROLE_ADMIN角色才能访问
                 .antMatchers("/users/signin").permitAll()
-            .anyRequest()
-            .authenticated();
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin();
 
         // Disable CSRF (cross site request forgery)
         http.csrf().disable();
 
         // No session will be created or used by spring security
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
@@ -85,6 +88,7 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     /**
      * Spring Security ignores URLs of static resources
+     *
      * @param web
      * @throws Exception
      */
