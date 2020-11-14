@@ -15,6 +15,7 @@ import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class CustomGlobalMethodSecurityConfiguration extends GlobalMethodSecurit
     @Bean
     public RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        roleHierarchy.setHierarchy("write > read");
+        roleHierarchy.setHierarchy("ROLE_ADMIN1 > ROLE_USER1");
         return roleHierarchy;
     }
 }

@@ -18,7 +18,6 @@ import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandlerController {
-
     @Bean
     public ErrorAttributes errorAttributes() {
         // Hide exception field in the return object
@@ -37,6 +36,11 @@ public class GlobalExceptionHandlerController {
         res.sendError(ex.getHttpStatus().value(), ex.getMessage());
     }
 
+    /**
+     * CustomGlobalMethodSecurityConfiguration @PreAuthorize("hasAuthority('ROLE_USER')")
+     * @param res
+     * @throws IOException
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public void handleAccessDeniedException(HttpServletResponse res) throws IOException {
         res.sendError(HttpStatus.FORBIDDEN.value(), "Access denied");
@@ -46,5 +50,4 @@ public class GlobalExceptionHandlerController {
     public void handleException(HttpServletResponse res) throws IOException {
         res.sendError(HttpStatus.BAD_REQUEST.value(), "Something went wrong");
     }
-
 }

@@ -1,6 +1,8 @@
 package org.paasplatform.security.rbac;
 
 import org.paasplatform.security.rbac.jpa.UserRepository;
+import org.paasplatform.security.rbac.jwt.JwtAccessDeniedHandler;
+import org.paasplatform.security.rbac.jwt.JwtAuthenticationEntryPoint;
 import org.paasplatform.security.rbac.jwt.JwtTokenFilterConfigurer;
 import org.paasplatform.security.rbac.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 //@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
@@ -27,6 +31,15 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationErrorHandler;
+
+    @Autowired
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    @Autowired
+    private CorsFilter corsFilter;
 
     /* @Autowired
      private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
@@ -65,25 +78,42 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 开启登录配置
-        http.authorizeRequests()
+        http
+            // we don't need CSRF because our token is invulnerable
+            .csrf().disable()
 
-                //.antMatchers("/user/**").hasRole("User")// 需要具有ROLE_USER角色才能访问
-                .antMatchers("/admin/**").hasAnyAuthority("WRITE_PRIVILEGE")//.hasRole("Admin"); // 需要具有ROLE_ADMIN角色才能访问
-                .antMatchers("/users/signin").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
-        // Disable CSRF (cross site request forgery)
-        http.csrf().disable();
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationErrorHandler)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
 
-        // No session will be created or used by spring security
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+            // enable h2-console
+            .and()
+            .headers()
+            .frameOptions()
+            .sameOrigin()
 
-        // Apply JWT
-        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+            // create no session
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+            .and()
+            .authorizeRequests()
+            .antMatchers("/users/signin").permitAll()
+            .antMatchers("/admin/index").hasAuthority("ROLE_USER")
+            // .antMatchers("/api/activate").permitAll()
+            // .antMatchers("/api/account/reset-password/init").permitAll()
+            // .antMatchers("/api/account/reset-password/finish").permitAll()
+
+            .antMatchers("/api/person").hasAuthority("ROLE_USER")
+            //.antMatchers("/api/hiddenmessage").hasAuthority("ROLE_ADMIN")
+
+            .anyRequest().authenticated()
+
+            .and()
+            .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }
 
     /**
@@ -100,11 +130,17 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/v2/api-docs",
-                "/webjars/**");
+                "/webjars/**")
+
+        // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
+        .and()
+                .ignoring()
+                .antMatchers("/h2-console/**/**");;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

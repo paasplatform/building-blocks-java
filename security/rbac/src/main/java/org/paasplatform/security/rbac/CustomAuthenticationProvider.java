@@ -9,7 +9,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-//@Component
+/**
+ * Two Factor Authentication functionality
+ * https://medium.com/javarevisited/spring-boot-two-factor-authentication-78e00aa10176
+ * https://www.baeldung.com/spring-security-two-factor-authentication-with-soft-token
+ */
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Autowired

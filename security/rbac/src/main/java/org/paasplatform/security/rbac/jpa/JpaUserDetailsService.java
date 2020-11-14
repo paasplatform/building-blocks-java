@@ -44,7 +44,14 @@ public class JpaUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("No user found with username: " + email);
             }
 
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+            return new org.springframework.security.core.userdetails.User(
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.isEnabled(),
+                    true,
+                    true,
+                    true,
+                    getAuthorities(user.getRoles()));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,6 +67,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         final List<Privilege> collection = new ArrayList<>();
         for (final Role role : roles) {
             collection.addAll(role.getPrivileges());
+            privileges.add(role.getName());
         }
         for (final Privilege item : collection) {
             privileges.add(item.getName());
