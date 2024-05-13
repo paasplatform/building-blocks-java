@@ -1,4 +1,4 @@
-package org.passplatform.edas.configuration;
+package org.paasplatform.edas.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 /**
  * Configure spring security for multiple servlets
@@ -37,15 +39,19 @@ public class MultiHttpSecurityConfiguration {
     public static class ModuleAWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-
-            http.antMatcher("/a/**")
-                    .authorizeRequests()
-                    .anyRequest().hasRole("ADMIN")
-                    .and()
-                    .httpBasic();
+            http
+                    // we don't need CSRF because our token is invulnerable
+                    .antMatcher("/modulea/**")
+                    .csrf().disable()
+            .logout().disable()
+            .securityContext().disable()
+            .headers().disable()
+                    .securityContext().disable()
+                    .anonymous().disable()
+                    .requestCache().disable()
+                    .sessionManagement().disable()
+                    .exceptionHandling().disable();
         }
-
-
     }
 
     @Configuration
@@ -53,10 +59,11 @@ public class MultiHttpSecurityConfiguration {
     public static class ModuleBWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and()
-                    .formLogin();
+
+            http
+                    // we don't need CSRF because our token is invulnerable
+                    .antMatcher("/moduleb/**");
+
         }
     }
 }

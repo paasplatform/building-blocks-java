@@ -1,6 +1,6 @@
-package org.passplatform.edas.configuration;
+package org.paasplatform.edas.configuration;
 
-import org.passplatform.edas.configuration.listener.CustomListener;
+import org.paasplatform.edas.configuration.listener.CustomServletContextListener;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ public class ServletListenerConfiguration {
     @Bean
     public ServletListenerRegistrationBean<ServletContextListener> customListenerBean() {
         ServletListenerRegistrationBean<ServletContextListener> bean = new ServletListenerRegistrationBean();
-        bean.setListener(new CustomListener());
+        bean.setListener(new CustomServletContextListener());
         return bean;
     }
 }

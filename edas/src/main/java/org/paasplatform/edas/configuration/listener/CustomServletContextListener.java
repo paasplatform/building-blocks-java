@@ -6,17 +6,17 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-public class CustomListener implements ServletContextListener {
+public class CustomServletContextListener implements ServletContextListener {
 
-    Logger logger = LoggerFactory.getLogger(CustomListener.class);
+    Logger logger = LoggerFactory.getLogger(CustomServletContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        logger.info("CustomListener is initialized");
+        logger.info("Servlet {} context is initialized", sce.getServletContext().getServletContextName());
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        logger.info("CustomListener is destroyed");
+        logger.info("Servlet {} context is destroyed", sce.getServletContext().getServletContextName());
     }
 }

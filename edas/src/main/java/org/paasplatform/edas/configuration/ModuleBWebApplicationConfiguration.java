@@ -1,5 +1,6 @@
-package org.passplatform.edas.configuration;
+package org.paasplatform.edas.configuration;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,6 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableWebMvc
-//@ComponentScan(basePackages = { "com.baeldung.contexts.normal" })
+@ComponentScan(basePackages = { "org.paasplatform.edas.moduleB" })
 public class ModuleBWebApplicationConfiguration implements WebMvcConfigurer {
 }

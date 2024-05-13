@@ -1,4 +1,4 @@
-package org.passplatform.edas.configuration.filters;
+package org.paasplatform.edas.configuration.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +13,10 @@ import java.io.IOException;
 /**
  * A servlet filter to log request and response
  * The logging implementation is pretty native and for demonstration only
- * @author hemant
+ * @author d.h.f
  *
  */
-@Component
+//@Component
 @Order(2)
 public class RequestResponseLoggingFilter implements Filter {
 

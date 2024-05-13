@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/moduleb")
-public class TestController {
+public class BTestController {
     @GetMapping("/test")
     public String test() {
         return "b response.";
