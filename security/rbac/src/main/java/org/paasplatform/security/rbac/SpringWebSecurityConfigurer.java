@@ -6,8 +6,11 @@ import org.paasplatform.security.rbac.jwt.JwtAuthenticationEntryPoint;
 import org.paasplatform.security.rbac.jwt.JwtTokenFilterConfigurer;
 import org.paasplatform.security.rbac.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.CorsFilter;
 
-@Configuration
+@Configuration()
+//可以通过集成的方式在其他jar中使用，但是@Configuration不应该生效
+@ConditionalOnProperty(prefix = "security", name = "bootstrap", havingValue = "true")
 //@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
