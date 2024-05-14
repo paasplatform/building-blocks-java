@@ -37,7 +37,7 @@ public class GlobalExceptionHandlerController {
     }
 
     /**
-     * CustomGlobalMethodSecurityConfiguration @PreAuthorize("hasAuthority('ROLE_USER')")
+     * CustomGlobalMethodSecurityConfigurationAutoConfiguration @PreAuthorize("hasAuthority('ROLE_USER')")
      * @param res
      * @throws IOException
      */

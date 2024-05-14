@@ -20,7 +20,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -71,7 +70,7 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider authProvider() {
         final CustomAuthenticationProvider authProvider = new CustomAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+//        authProvider.setPasswordEncoder(passwordEncoder());
         //authProvider.setPostAuthenticationChecks(differentLocationChecker);
         return authProvider;
     }
@@ -102,8 +101,10 @@ public class SpringWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
             .and()
             .authorizeRequests()
+                .antMatchers("/modulea/a/test").permitAll()
             .antMatchers("/users/signin").permitAll()
-            .antMatchers("/admin/index").hasAuthority("ROLE_USER")
+                .antMatchers("/modulea/admin/index").permitAll()
+//            .antMatchers("/admin/index").hasAuthority("ROLE_USER")
             // .antMatchers("/api/activate").permitAll()
             // .antMatchers("/api/account/reset-password/init").permitAll()
             // .antMatchers("/api/account/reset-password/finish").permitAll()

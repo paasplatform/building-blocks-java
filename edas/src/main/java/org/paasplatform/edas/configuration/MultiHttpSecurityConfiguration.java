@@ -1,5 +1,6 @@
 package org.paasplatform.edas.configuration;
 
+import org.paasplatform.security.rbac.SpringWebSecurityConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -36,22 +37,22 @@ public class MultiHttpSecurityConfiguration {
 
     @Configuration
     @Order(1)
-    public static class ModuleAWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    // we don't need CSRF because our token is invulnerable
-                    .antMatcher("/modulea/**")
-                    .csrf().disable()
-            .logout().disable()
-            .securityContext().disable()
-            .headers().disable()
-                    .securityContext().disable()
-                    .anonymous().disable()
-                    .requestCache().disable()
-                    .sessionManagement().disable()
-                    .exceptionHandling().disable();
-        }
+    public static class ModuleAWebSecurityConfigurerAdapter extends SpringWebSecurityConfigurer {
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http
+//                    // we don't need CSRF because our token is invulnerable
+//                    .antMatcher("/modulea/**")
+//                    .csrf().disable()
+//            .logout().disable()
+//            .securityContext().disable()
+//            .headers().disable()
+//                    .securityContext().disable()
+//                    .anonymous().disable()
+//                    .requestCache().disable()
+//                    .sessionManagement().disable()
+//                    .exceptionHandling().disable();
+//        }
     }
 
     @Configuration

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "org.paasplatform.edas.moduleA" })
+@ComponentScan(basePackages = { "org.paasplatform.security.rbac" })
 public class ModuleAWebApplicationConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

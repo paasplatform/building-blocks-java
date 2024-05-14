@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
  *  which eliminates the need to annotate every request handling method of the controller class with the @ResponseBody annotation.
  */
 @RestController
-@RequestMapping("/modulea")
+@RequestMapping("/a")
 public class TestController {
     @GetMapping("/test")
     public String test() {

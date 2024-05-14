@@ -11,7 +11,7 @@ import javax.servlet.ServletContextListener;
 public class ServletListenerConfiguration {
     @Bean
     public ServletListenerRegistrationBean<ServletContextListener> customListenerBean() {
-        ServletListenerRegistrationBean<ServletContextListener> bean = new ServletListenerRegistrationBean();
+        ServletListenerRegistrationBean<ServletContextListener> bean = new ServletListenerRegistrationBean<>();
         bean.setListener(new CustomServletContextListener());
         return bean;
     }

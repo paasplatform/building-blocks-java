@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  *  which eliminates the need to annotate every request handling method of the controller class with the @ResponseBody annotation.
  */
 @RestController
-@RequestMapping("/moduleb")
+@RequestMapping("/b")
 public class BTestController {
     @GetMapping("/test")
     public String test() {
