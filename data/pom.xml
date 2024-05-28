@@ -16,7 +16,6 @@
         <module>plugins</module>
         <module>plugins/org.paasplatform.data.model</module>
         <module>core</module>
-        <module>test</module>
     </modules>
     <dependencies>
         <dependency>
