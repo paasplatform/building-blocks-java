@@ -11,7 +11,6 @@ public class Test {
         // set sslmode here.
         // with ssl certificate and path.
         String url = "jdbc:postgresql://localhost:5432/demo";
-        Test t = new Test();
 
         try {
             Class.forName("org.postgresql.Driver");

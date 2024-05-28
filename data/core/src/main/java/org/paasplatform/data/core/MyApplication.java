@@ -10,7 +10,6 @@ public class MyApplication {
         SpringApplication.run(MyApplication.class, args);
         Test test= new Test();
         test.Do();
-
     }
 }
 
