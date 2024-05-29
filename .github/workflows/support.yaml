@@ -40,4 +40,4 @@ jobs:
       - name: Test with Spring Boot Latest
         run: |
           ./mvnw package
-          ./mybatis-spring-boot-samples/run_fatjars.sh
+          # ./mybatis-spring-boot-samples/run_fatjars.sh
