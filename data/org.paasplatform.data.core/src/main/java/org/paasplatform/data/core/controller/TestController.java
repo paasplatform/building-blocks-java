@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 @RestController
 @RequestMapping("/a")
@@ -58,4 +55,43 @@ public class TestController {
 
         return "a response.";
     }
+    @GetMapping("/test1")
+    public String test1() {
+        Connection conn = null;
+        // set sslmode here.
+        // with ssl certificate and path.
+        String url = "jdbc:postgresql://localhost:5432/demo";
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(url, "postgres", "123456");
+            System.out.println("Database connected");
+
+            DatabaseMetaData metaData = conn.getMetaData();
+
+            ResultSet schemas = metaData.getSchemas();
+            while (schemas.next()){
+                String tableSchem = schemas.getString("TABLE_SCHEM");
+                System.out.println(tableSchem);
+
+                ResultSet rs = metaData.getTables(conn.getCatalog(), tableSchem, null, new String[]{"TABLE"});
+                while(rs.next()) {
+                    System.out.println("   " + rs.getString("TABLE_NAME"));
+                }
+
+            }
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Test failed");
+        } finally {
+            // release resource ....
+        }
+
+
+        return "test1.";
+    }
+
+
 }
