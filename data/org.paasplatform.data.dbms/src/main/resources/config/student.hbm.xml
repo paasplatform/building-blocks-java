@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class entity-name="dyc_Student" table="dyc_Student" schema="attachment_service1" >
+    <class entity-name="StudentEntity" table="tbl_Student" schema="attachment_service" >
         <id name="id" type="java.lang.String"  >
             <generator class="uuid"></generator>
         </id>

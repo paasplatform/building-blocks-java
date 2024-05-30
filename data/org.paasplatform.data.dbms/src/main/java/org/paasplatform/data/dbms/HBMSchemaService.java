@@ -9,6 +9,8 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,16 +41,18 @@ public class HBMSchemaService implements ISchemaService {
 
     public void execute() {
         String jdbcUrl = "jdbc:postgresql://localhost:5432/btt";
-        // String dialect = "org.hibernate.dialect.PostgreSQLDialect";
+        String dialect = "org.hibernate.dialect.PostgreSQLDialect";
         String driverClass = "org.postgresql.Driver";
         String username = "postgres";
         String password = "123456";
 
         StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-        registryBuilder //.configure("config/hibernate-mysql.cfg.xml")
+        registryBuilder
+                //.configure("config/hibernate-mysql.cfg.xml")
+                .applySetting("hibernate.hbm2ddl.create_namespaces", true)
                 .applySetting("connection.url", jdbcUrl)
                 .applySetting("hibernate.connection.url", jdbcUrl)
-//                .applySetting("hibernate.dialect", dialect)
+                .applySetting("hibernate.dialect", dialect)
                 .applySetting("hibernate.connection.driver_class", driverClass)
                 .applySetting("hibernate.connection.username", username)
                 .applySetting("hibernate.connection.password", password);
@@ -56,8 +60,11 @@ public class HBMSchemaService implements ISchemaService {
         StandardServiceRegistry serviceRegistry = registryBuilder.build();
 //        StandardServiceRegistry serviceRegistry = sessionFactory.getSessionFactoryOptions().getServiceRegistry();
         MetadataSources metadataSources = new MetadataSources(serviceRegistry);
-        metadataSources.addInputStream(new ByteArrayInputStream(XML_MAPPING.getBytes()));
-//        metadataSources.addInputStream(getXmlStream());
+//        metadataSources.addInputStream(new ByteArrayInputStream(XML_MAPPING.getBytes()));
+        //can merge to one file
+        metadataSources.addInputStream(getXmlStream("/config/Stock.hbm.xml"));
+        metadataSources.addInputStream(getXmlStream("/config/StockDailyRecord.hbm.xml"));
+        metadataSources.addInputStream(getXmlStream("/config/student.hbm.xml"));
         Metadata metadata = metadataSources.buildMetadata();
         SchemaExport schemaExport = new SchemaExport();
         schemaExport.create(EnumSet.of(TargetType.DATABASE), metadata);
@@ -71,4 +78,18 @@ public class HBMSchemaService implements ISchemaService {
         Statement statement = conn.createStatement();
         statement.executeUpdate("create database if not exists `$dbName` charset utf8");
     }
+
+    public static InputStream getXmlStream(String path) {
+        byte[] bytes = new byte[0];
+        try (InputStream inputStream = HBMSchemaService.class.getResourceAsStream(path)) {
+            bytes = new byte[inputStream.available()];
+            inputStream.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ByteArrayInputStream(bytes);
+    }
+
+
 }

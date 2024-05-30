@@ -11,6 +11,7 @@ public class DBMSAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(HBMSchemaService.class)
     public ISchemaService schemaService(DBMSProperties properties) {
+        System.out.printf("properties var is: %s", properties.getVar());
         return new HBMSchemaService();
     }
 }
