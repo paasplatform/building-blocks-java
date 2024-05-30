@@ -1,13 +1,13 @@
-package org.paasplatform.data.core;
+package org.paasplatform.data.dbms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-public class SampleWebApplication {
+public class DBMSApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SampleWebApplication.class, args);
+        SpringApplication.run(DBMSApplication.class, args);
+        new HBMSchemaService().execute();
     }
 }

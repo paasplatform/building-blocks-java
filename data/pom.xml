@@ -15,6 +15,7 @@
   <modules>
     <module>org.paasplatform.data.core</module>
     <module>org.paasplatform.data.ext.postgres</module>
+    <module>org.paasplatform.data.dbms</module>
   </modules>
   <properties>
     <module.name>org.paasplatform.data.core</module.name>

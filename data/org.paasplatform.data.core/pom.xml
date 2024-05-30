@@ -28,6 +28,11 @@
       <artifactId>org.paasplatform.data.ext.postgres</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>org.paasplatform</groupId>
+      <artifactId>org.paasplatform.data.dbms</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>

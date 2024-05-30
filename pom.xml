@@ -62,6 +62,9 @@
     <java.release.version>17</java.release.version>
 
     <spring-boot.version>3.3.0</spring-boot.version>
+    <lombok.version>1.18.28</lombok.version>
+    <commons-logging.version>1.2</commons-logging.version>
+    <slf4j.version>2.0.7</slf4j.version>
 
     <argLine>--add-opens java.base/java.lang=ALL-UNNAMED -Dfile.encoding=UTF-8</argLine>
 
@@ -121,6 +124,24 @@
         <artifactId>mybatis-spring-boot-starter-test</artifactId>
         <version>${project.version}</version>
       </dependency> -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>${commons-logging.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
