@@ -1,6 +1,5 @@
-package org.paasplatform.data.core.controller;
+package org.paasplatform.data.bootstrap.controller;
 
-import org.paasplatform.data.dbms.HBMSchemaService;
 import org.paasplatform.data.dbms.ISchemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ import java.sql.*;
 @RequestMapping("/a")
 public class TestController {
     @Autowired
-    HBMSchemaService schemaService;
+    ISchemaService schemaService;
 
     @GetMapping("/test")
     public String test() {

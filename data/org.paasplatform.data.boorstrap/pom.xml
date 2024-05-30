@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.paasplatform.data.core</artifactId>
+  <artifactId>org.paasplatform.data.boorstrap</artifactId>
   <name>${project.artifactId}</name>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>

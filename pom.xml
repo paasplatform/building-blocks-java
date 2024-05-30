@@ -32,9 +32,6 @@
 
   <modules>
     <module>data</module>
-    <module>demo-springboot-starter</module>
-    <module>springboot-demo4starter</module>
-    <module>springboot-starter-demo-usage</module>
   </modules>
 
   <scm>
@@ -74,7 +71,7 @@
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1700807562</project.build.outputTimestamp>
 
-    <module.name>org.mybatis.spring.boot</module.name>
+    <module.name>org.paasplatform.building-blocks</module.name>
 
     <!-- Disable topSiteURL -->
     <topSiteURL />
