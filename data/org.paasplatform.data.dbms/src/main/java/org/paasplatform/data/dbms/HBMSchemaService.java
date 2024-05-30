@@ -39,7 +39,7 @@ public class HBMSchemaService implements ISchemaService {
 
     public void execute() {
         String jdbcUrl = "jdbc:postgresql://localhost:5432/btt";
-        String dialect = "org.hibernate.dialect.PostgreSQLDialect";
+        // String dialect = "org.hibernate.dialect.PostgreSQLDialect";
         String driverClass = "org.postgresql.Driver";
         String username = "postgres";
         String password = "123456";

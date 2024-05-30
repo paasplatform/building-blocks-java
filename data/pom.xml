@@ -13,7 +13,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>org.paasplatform.data.boorstrap</module>
+    <module>org.paasplatform.data.bootstrap</module>
     <module>org.paasplatform.data.ext.postgres</module>
     <module>org.paasplatform.data.dbms</module>
   </modules>

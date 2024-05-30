@@ -1,16 +1,16 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<!DOCTYPE hibernate-mapping PUBLIC-->
-<!--        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"-->
-<!--        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">-->
-<!--<hibernate-mapping>-->
-<!--    <class entity-name="dyc_Student" table="dyc_Student" schema="attachment_service1" >-->
-<!--        <id name="id" type="java.lang.String"  >-->
-<!--            <generator class="uuid"></generator>-->
-<!--        </id>-->
-<!--        <property type="java.lang.String" name="username" column="username"/>-->
-<!--        <property name="password" type="java.lang.String" column="password"/>-->
-<!--        <property name="sex" type="java.lang.String"  length="300" column="sex"/>-->
-<!--        <property name="age" type="java.lang.Integer" column="age"/>-->
-<!--        <property name="birthday" type="java.util.Date" column="birthday"/>-->
-<!--    </class>-->
-<!--</hibernate-mapping>-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class entity-name="dyc_Student" table="dyc_Student" schema="attachment_service1" >
+        <id name="id" type="java.lang.String"  >
+            <generator class="uuid"></generator>
+        </id>
+        <property type="java.lang.String" name="username" column="username"/>
+        <property name="password" type="java.lang.String" column="password"/>
+        <property name="sex" type="java.lang.String"  length="300" column="sex"/>
+        <property name="age" type="java.lang.Integer" column="age"/>
+        <property name="birthday" type="java.util.Date" column="birthday"/>
+    </class>
+</hibernate-mapping>
