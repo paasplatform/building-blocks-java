@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class DBMSAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(HBMSchemaService.class)
-    public HBMSchemaService schemaService() {
+    public HBMSchemaService schemaService(DBMSProperties properties) {
+        
         return new HBMSchemaService();
     }
 }

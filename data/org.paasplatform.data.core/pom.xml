@@ -16,6 +16,8 @@
 
   <properties>
     <module.name>${project.artifactId}</module.name>
+    <java.version>17</java.version>
+    <java.release.version>17</java.release.version>
   </properties>
 
   <dependencies>

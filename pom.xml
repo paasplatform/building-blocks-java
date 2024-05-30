@@ -32,6 +32,9 @@
 
   <modules>
     <module>data</module>
+    <module>demo-springboot-starter</module>
+    <module>springboot-demo4starter</module>
+    <module>springboot-starter-demo-usage</module>
   </modules>
 
   <scm>
