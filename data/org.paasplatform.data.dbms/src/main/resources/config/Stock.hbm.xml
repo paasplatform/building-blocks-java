@@ -9,7 +9,9 @@
             <generator class="identity" />
         </id>
         <property name="stockCode" type="string">
-            <column name="STOCK_CODE" length="10" not-null="true" unique="true" />
+            <column name="STOCK_CODE" length="10" not-null="true" unique="true">
+                <comment>this is a test stock comment update1</comment>
+            </column>
         </property>
         <property name="stockName" type="string">
             <column name="STOCK_NAME" length="20" not-null="true" unique="true" />
