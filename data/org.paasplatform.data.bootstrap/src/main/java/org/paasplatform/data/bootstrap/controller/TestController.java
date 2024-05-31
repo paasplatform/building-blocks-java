@@ -59,17 +59,21 @@ public class TestController {
 
             DatabaseMetaData metaData = conn.getMetaData();
 
+
             ResultSet schemas = metaData.getSchemas();
             while (schemas.next()){
                 String tableSchem = schemas.getString("TABLE_SCHEM");
                 System.out.println(tableSchem);
 
-                ResultSet rs = metaData.getTables(conn.getCatalog(), tableSchem, null, new String[]{"TABLE"});
+                ResultSet rs = metaData.getTables(conn.getCatalog(), tableSchem, null, new String[]{"TABLE","VIEW"});
                 while(rs.next()) {
                     System.out.println("   " + rs.getString("TABLE_NAME"));
+                    System.out.println("   " + rs.getString("TABLE_TYPE"));
+                    System.out.println("   " + rs.getString("remarks"));
                 }
 
             }
+
 
 
         }catch (Exception e) {
