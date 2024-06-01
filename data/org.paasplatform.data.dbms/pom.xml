@@ -38,7 +38,12 @@
             <artifactId>hibernate-ant</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.github.javadev/underscore -->
+        <dependency>
+            <groupId>com.github.javadev</groupId>
+            <artifactId>underscore</artifactId>
+            <version>1.101</version>
+        </dependency>
     </dependencies>
 
 </project>
