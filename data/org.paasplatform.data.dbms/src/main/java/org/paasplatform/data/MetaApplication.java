@@ -1,6 +1,5 @@
 package org.paasplatform.data;
 
-import org.paasplatform.data.meta.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

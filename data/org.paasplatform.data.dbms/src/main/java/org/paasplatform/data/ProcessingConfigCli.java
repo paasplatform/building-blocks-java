@@ -1,6 +1,6 @@
 package org.paasplatform.data;
 
-import org.paasplatform.data.meta.ProcessingConfig;
+import org.paasplatform.data.deprecated.ProcessingConfig;
 
 import java.util.Properties;
 import java.util.regex.Pattern;
