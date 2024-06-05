@@ -1,7 +1,5 @@
 package org.paasplatform.data.bootstrap.controller;
 
-import org.paasplatform.data.dbms.ISchemaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +9,7 @@ import java.sql.*;
 @RestController
 @RequestMapping("/a")
 public class TestController {
-    @Autowired
-    ISchemaService schemaService;
+    
 
     @GetMapping("/test")
     public String test() {
@@ -87,11 +84,5 @@ public class TestController {
         return "test1.";
     }
 
-    @GetMapping("/test2")
-    public  String test2() {
-
-        this.schemaService.execute();
-
-        return  "123";
-    }
+    
 }

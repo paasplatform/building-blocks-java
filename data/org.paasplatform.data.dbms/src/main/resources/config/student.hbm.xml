@@ -4,9 +4,24 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class entity-name="StudentEntity" table="tbl_Student" schema="attachment_service" >
-        <id name="id" type="java.lang.String"  >
+        <!-- simple one primary key -->
+        <!-- <id name="id" type="java.lang.String"  >
             <generator class="uuid"></generator>
-        </id>
+        </id> -->
+        <!-- Union primary key(constrait type -> Primary key) -->
+        <composite-id class="xx" name="xx">
+            <key-property name="xx1" type="java.lang.String">
+                <column name="xx1" not-null="true"/>
+            </key-property>
+            <key-property name="xx2" type="java.lang.String">
+                <column name="xx2" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <!-- simple Union primary key(constrait type -> Primary key)-->
+        <!-- <composite-id>
+            <key-property name="key111" type="java.lang.String" not-null="true"/>
+            <key-property name="key23" type="java.lang.String" not-null="true"/>
+        </composite-id> -->
         <property type="java.lang.String" name="username" column="username"/>
         <property name="password" type="java.lang.String" column="password"/>
         <property name="sex" type="java.lang.String"  length="300" column="sex"/>

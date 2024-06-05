@@ -2,7 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 26 April 2011 11:37:37 AM by Hibernate Tools 3.4.0.CR1 -->
+<!--xml配置项详细解释：https://blog.csdn.net/J080624/article/details/82959330-->
+<!--hibernate type映射：https://blog.csdn.net/aiwokache/article/details/118225482-->
 <hibernate-mapping>
+<!--    name: the fully qualified Java class name of the persistent class or interface. If this attribute is missing, it is assumed that the mapping is for a non-POJO entity.-->
+<!--    entity-name : Hibernate3 allows a class to be mapped multiple times, potentially to different tables.-->
     <class name="com.mkyong.stock.Stock" table="stock" catalog="mkyongdb" schema="mkyongdb">
         <id name="stockId" type="java.lang.Integer">
             <column name="STOCK_ID" />
@@ -22,5 +26,29 @@
             </key>
             <one-to-many class="com.mkyong.stock.StockDailyRecord" />
         </set>
+    </class>
+    <class name="com.mkyong.stock.StockDailyRecord" table="stock_daily_record" catalog="mkyongdb" schema="mkyongdb">
+        <id name="recordId" type="java.lang.Integer">
+            <column name="RECORD_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="stock" class="com.mkyong.stock.Stock" fetch="select">
+            <column name="STOCK_ID" not-null="true" />
+        </many-to-one>
+        <property name="priceOpen" type="big_decimal">
+            <column name="PRICE_OPEN" precision="6"/>
+        </property>
+        <property name="priceClose" type="java.lang.Float">
+            <column name="PRICE_CLOSE" precision="6" />
+        </property>
+        <property name="priceChange" type="java.lang.Float">
+            <column name="PRICE_CHANGE" precision="6" />
+        </property>
+        <property name="volume" type="java.lang.Long">
+            <column name="VOLUME" />
+        </property>
+        <property name="date" type="date">
+            <column name="DATE" length="10" not-null="true" unique="true" />
+        </property>
     </class>
 </hibernate-mapping>
